@@ -919,7 +919,7 @@ bootcmd:
  - sysctl net.core.netdev_max_backlog = 30000
  - sysctl net.ipv4.tcp_congestion_control = htcp
  - sysctl net.ipv4.tcp_mtu_probing = 1
- - /sbin/ifconfig ethN txqueuelen 10000
+ - /sbin/ifconfig eth0 txqueuelen 10000
  - echo 202.13.207.211 dirac.cc.kek.jp >> /etc/hosts
  - echo 202.13.207.225 dirac1.cc.kek.jp >> /etc/hosts
  - echo 202.13.207.216 dirac2.cc.kek.jp >> /etc/hosts
