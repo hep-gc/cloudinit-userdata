@@ -840,7 +840,8 @@ cvmfs:
   CVMFS_SERVER_URL: '"http://cvmfs.racf.bnl.gov:8000/opt/@org@;http://cvmfs.fnal.gov:8000/opt/@org@;http://cernvmfs.gridpp.rl.ac.uk:8000/opt/@org@;http://cvmfs-stratum-one.cern.ch:8000/opt/@org@;http://cvmfs02.grid.sinica.edu.tw:8000/opt/@org@"'
 
 ganglia:
- override_hostname: "%f"
+ globals:
+  override_hostname: "%f"
  cluster:
   name: '"IAAS"'
  udp_recv_channel:
