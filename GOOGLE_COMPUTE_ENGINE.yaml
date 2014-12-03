@@ -13,7 +13,7 @@ write_files:
 -   content: |
         # Run shoal client to get updates list of proxy caches
         /usr/bin/shoal-client
-    ower: root:root
+    owner: root:root
     path: /etc/cron.hourly/shoal-client
     permissions: '0755'
 -   content: |
@@ -35,7 +35,7 @@ write_files:
         # Fix for using AtlasLocalRootBase with a kit
         unset  AtlasSetupSite
         rm ~/.asetup
-    ower: root:root
+    owner: root:root
     path: /etc/profile.d/grid-setup.sh
     permissions: '0644'
 -   content: |
