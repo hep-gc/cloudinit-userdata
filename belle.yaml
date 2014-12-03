@@ -911,7 +911,7 @@ packages:
     - shoal-client
     - ca-policy-egi-core
 
-bootcmd:
+runcmd:
  - [ sysctl, net.core.rmem_max, =, 67108864 ]
  - [ sysctl, net.core.wmem_max, =, 67108864 ]
  - [ sysctl, net.ipv4.tcp_rmem, =, 4096, 87380, 33554432 ]
@@ -925,8 +925,6 @@ bootcmd:
  - [ echo, 202.13.207.216, dirac2.cc.kek.jp, >>, /etc/hosts ]
  - [ echo, 202.13.207.217, dirac3.cc.kek.jp, >>, /etc/hosts ]
  - [ echo, 202.13.206.45, kek2-lfc.cc.kek.jp, >>, /etc/hosts ]
-
-runcmd:
  - [ shoal-client ]
  - [ mv, /etc/localtime , /etc/localtime-old ]
  - [ ln, -sf, /usr/share/zoneinfo/UTC, /etc/localtime ]

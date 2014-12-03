@@ -923,7 +923,7 @@ packages:
     - shoal-client
     - ca-policy-egi-core
 
-bootcmd:
+runcmd:
  - [ sysctl, net.core.rmem_max, =, 67108864 ]
  - [ sysctl, net.core.wmem_max, =, 67108864 ]
  - [ sysctl, net.ipv4.tcp_rmem, =, 4096, 87380, 33554432 ]
@@ -932,8 +932,6 @@ bootcmd:
  - [ sysctl, net.ipv4.tcp_congestion_control, =, htcp ]
  - [ sysctl, net.ipv4.tcp_mtu_probing, =, 1 ]
  - [ /sbin/ifconfig, eth0, txqueuelen, 10000 ]
-
-runcmd:
  - [ shoal-client ]
  - [ rpm, -U, --nodeps, --force, "http://sourceforge.net/projects/ganglia/files/ganglia%20monitoring%20core/3.4.0/RHEL6-RPMS/libganglia-3.4.0-1.x86_64.rpm/download", "http://sourceforge.net/projects/ganglia/files/ganglia%20monitoring%20core/3.4.0/RHEL6-RPMS/ganglia-gmond-3.4.0-1.x86_64.rpm/download"]
  - [ mv, /etc/localtime , /etc/localtime-old ]
