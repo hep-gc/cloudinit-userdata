@@ -1,0 +1,3 @@
+[ucernvm-begin]
+CVMFS_PAC_URLS=http://shoal.heprc.uvic.ca/wpad.dat
+[ucernvm-end]
