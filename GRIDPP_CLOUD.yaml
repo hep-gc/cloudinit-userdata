@@ -911,11 +911,6 @@ yum_repos:
         baseurl: http://shoal.heprc.uvic.ca/repo/prod/
         enabled: true
         gpgcheck: false
-    EGI_trustanchors:
-        baseurl: http://repository.egi.eu/sw/production/cas/1/current/
-        enabled: true
-        gpgcheck: true
-        gpgkey: http://repository.egi.eu/sw/production/cas/1/GPG-KEY-EUGridPMA-RPM-3
 
 shoal:
     shoal_server_url: http://shoal.heprc.uvic.ca/nearest
@@ -923,7 +918,6 @@ shoal:
 
 packages:
     - shoal-client
-    - ca-policy-egi-core
 
 runcmd:
  - [ shoal-client ]
