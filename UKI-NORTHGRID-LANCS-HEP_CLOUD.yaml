@@ -56,7 +56,7 @@ write_files:
         # Local config for Cloud Scheduler
 
         ## Set this to the name you would like to give your VM
-        VMType = "gridpp-tester"
+        VMType = "gridpp-datacentred"
 
         ## Hostname of the central manager.
         # Prefer value contextualized by Cloud Scheduler and then use central_manager
