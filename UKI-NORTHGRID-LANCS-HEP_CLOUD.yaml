@@ -845,12 +845,12 @@ ganglia:
  cluster:
   name: '"GRIDPP_CLOUD"'
  udp_recv_channel:
-  port: 9000
+  port: 9013
  tcp_accept_channel:
-  port: 9000
+  port: 9013
  udp_send_channel:
   host: atlas-ganglia-mon.cern.ch
-  port: 9000
+  port: 9013
   ttl: 2
 
 groups:
