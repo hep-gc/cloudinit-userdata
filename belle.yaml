@@ -836,8 +836,6 @@ cvmfs:
  local:
   CVMFS_REPOSITORIES: belle.cern.ch,grid.cern.ch
   CVMFS_HTTP_PROXY: kraken01.westgrid.ca:3128
- domain:
-  CVMFS_SERVER_URL: '"http://cvmfs.racf.bnl.gov:8000/opt/@org@;http://cernvmfs.gridpp.rl.ac.uk:8000/opt/@org@;http://cvmfs-stratum-one.cern.ch:8000/opt/@org@;http://cvmfs-stratum1-kit.gridka.de/cvmfs/belle;http://cvmfs.fnal.gov:8000/opt/@org@"'
 
 groups:
   - condor: [slot01,slot02,slot03,slot04,slot05,slot06,slot07,slot08,slot09,slot10,slot11,slot12,slot13,slot14,slot15,slot16]
