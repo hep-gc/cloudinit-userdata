@@ -25,7 +25,6 @@ write_files:
         # Workaround for condor not setting $HOME for worker sessions.
         # voms-proxy-info requires this.
         export HOME=`eval echo ~$USER`
-        exec "$@"
 
         # Define atlas software location
         export VO_ATLAS_SW_DIR=/cvmfs/atlas.cern.ch/repo/sw
@@ -49,6 +48,7 @@ write_files:
         # Condor startd jobwrapper
         # Executes using bash -l, so that all /etc/profile.d/*.sh scripts are sourced.
         #
+        exec "$@"
     owner: root:root
     permissions: '0755'
     path: /usr/libexec/condor/jobwrapper.sh
