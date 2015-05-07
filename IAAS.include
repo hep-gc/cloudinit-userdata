@@ -1,0 +1,3 @@
+#include
+https://raw.githubusercontent.com/hep-gc/cloudinit-userdata/master/core.yaml
+https://raw.githubusercontent.com/hep-gc/cloudinit-userdata/master/Reduced_IAAS.yaml
