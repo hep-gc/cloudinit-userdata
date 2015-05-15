@@ -843,12 +843,12 @@ ganglia:
  cluster:
   name: '"CA-JADE"'
  udp_recv_channel:
-  port: 9999
+  port: 8660
  tcp_accept_channel:
-  port: 9999
+  port: 8660
  udp_send_channel:
   host: atlas-ganglia-mon.cern.ch
-  port: 9999
+  port: 8660
   ttl: 2
 
 groups:
