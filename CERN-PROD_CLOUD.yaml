@@ -38,6 +38,7 @@ write_files:
 
         # Fix for using AtlasLocalRootBase with a kit
         unset  AtlasSetupSite
+        unset ATLAS_LOCAL_ASETUP_VERSION
         rm ~/.asetup
         # Fix for CERN-specific issue (https://its.cern.ch/jira/browse/ADCSUPPORT-3687)
         echo "poolcondpath = none" > ~/.asetup
