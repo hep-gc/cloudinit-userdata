@@ -20,21 +20,72 @@ write_files:
         # voms-proxy-info requires this.
         export HOME=`eval echo ~$USER`
 
-        # Define atlas software location
-        export VO_ATLAS_SW_DIR=/cvmfs/atlas.cern.ch/repo/sw
-
-        # Set up grid environment:
-        export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase
-        source $ATLAS_LOCAL_ROOT_BASE/user/atlasLocalSetup.sh --quiet
-
-        # Use EMI grid software
-        localSetupEmi --quiet
-
-        # Fix for using AtlasLocalRootBase with a kit
-        unset  AtlasSetupSite
-        rm ~/.asetup
-        # Fix for CERN-specific issue (https://its.cern.ch/jira/browse/ADCSUPPORT-3687)
-        echo "poolcondpath = none" > ~/.asetup
+        # Tarball base directory
+        base="/cvmfs/grid.cern.ch/emi3wn-latest"
+        
+        # EMI_TARBALL_BASE flag to let jobs know that this is a tarball node
+        # also used to locate etc/emi-version file by SAM nagios probes
+        export EMI_TARBALL_BASE="${base}"
+        
+        # site vo/specific 
+        export VO_ATLAS_SW_DIR="/cvmfs/atlas.cern.ch/repo/sw"
+        export X509_CERT_DIR="/cvmfs/grid.cern.ch/etc/grid-security/certificates"
+        export X509_VOMS_DIR="/cvmfs/grid.cern.ch/etc/grid-security/vomsdir"
+        export VOMS_USERCONF="/cvmfs/grid.cern.ch/etc/grid-security/vomses"
+        
+        # experiment-specific
+        export MYPROXY_SERVER="myproxy.cern.ch"
+        export BDII_LIST="lcg-bdii.cern.ch:2170"
+        export LCG_GFAL_INFOSYS="${BDII_LIST}"
+        
+        # not site specific; usually no change needed
+        export GRID_ENV_LOCATION="${base}/usr/libexec"
+        export -n GLITE_ENV_SET
+        export GT_PROXY_MODE="old"
+        
+        # Add tarball locations to PATH, LD_LIBRARY_PATH, MANPATH, PERL5LIB, PYTHONPATH
+        export PATH="${base}/bin:${base}/sbin:${base}/usr/bin:${base}/usr/sbin:${PATH}"
+        
+        v="${LD_LIBRARY_PATH}"
+        export LD_LIBRARY_PATH="${base}/lib64:${base}/lib:${base}/usr/lib64:${base}/usr/lib:${base}/usr/lib64/dcap"
+        if [ -n "${v}" ]; then
+          export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${v}"
+        fi
+        
+        v="${MANPATH}"
+        export MANPATH="${base}/usr/share/man"
+        if [ -n "${v}" ]; then
+          export MANPATH="${MANPATH}:${v}"
+        fi
+        
+        v="${PERL5LIB}"
+        export PERL5LIB="${base}/usr/lib64/perl5/vendor_perl:${base}/usr/lib/perl5/vendor_perl"
+        if [ -n "${v}" ]; then
+          export PERL5LIB="${PERL5LIB}:${v}"
+        fi
+        
+        # It's important that there is no trailing / for the PYTHONPATH variable.
+        # Some sites might need to explicitly expand the tarball base if 
+        # their users alter the PYTHONPATH significantly, for example:
+        # $base/usr/lib64/python2.6:$base/usr/lib64/python2.6/site-package
+        # See the PYTHONPATH section of the documentation for more details.
+        v="$PYTHONPATH"
+        export PYTHONPATH="${base}/usr/lib64/python2.6/site-packages:${base}/usr/lib/python2.6/site-packages"
+        if [ -n "${v}" ]; then
+          export PYTHONPATH="${PYTHONPATH}:${v}"
+        fi
+        
+        export JAVA_HOME="${base}/usr/lib/jvm/jre-1.6.0-openjdk.x86_64"
+        
+        export LCG_LOCATION="${base}/usr"
+        export GLITE_LOCATION="${base}/usr"
+        # If this is needed try $base/opt/glite/var instead
+        #export GLITE_LOCATION_VAR="/var"
+        export SRM_PATH="${base}/usr/share/srm"
+        export GFAL_PLUGIN_DIR="${base}/usr/lib64/gfal2-plugins/"
+        export GFAL_CONFIG_DIR="${base}/etc/gfal2.d/"
+        
+        unset v base
     owner: root:root
     path: /etc/profile.d/grid-setup.sh
     permissions: '0644'
