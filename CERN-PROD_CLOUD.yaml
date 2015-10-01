@@ -11,12 +11,6 @@ write_files:
     path: /etc/shoal/shoal_client.conf
     permissions: '0644'
 -   content: |
-        # Run shoal client to get updates list of proxy caches
-        /usr/bin/shoal-client
-    owner: root:root
-    path: /etc/cron.hourly/shoal-client
-    permissions: '0755'
--   content: |
         # Keep grid setup out of environment for root and sysadmin.
         if [[ ! "$USER" =~ ^slot[0-9]+$ ]] ; then
             return 0
@@ -913,7 +907,7 @@ yum_repos:
 
 shoal:
     shoal_server_url: http://shoal.heprc.uvic.ca/nearest
-    cron_shoal: '0,30 * * * * /usr/bin/shoal-client'
+    cron_shoal: '0,30 * * * * root /usr/bin/shoal-client'
 
 packages:
     - shoal-client
