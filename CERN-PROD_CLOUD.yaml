@@ -1,3 +1,4 @@
+#cloud-config
 write_files:
 -   content: |
         # Keep grid setup out of environment for root and sysadmin.

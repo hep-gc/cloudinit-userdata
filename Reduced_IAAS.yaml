@@ -1,3 +1,4 @@
+#cloud-config
 write_files:
 -   content: |
         # Local config for Cloud Scheduler
