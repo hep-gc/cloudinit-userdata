@@ -1,5 +1,5 @@
 #cloud-config
-#merge_type: 'list(append)+dict(recurse_array)+str()'
+merge_type: 'list(append)+dict(recurse_array)+str()'
 
 write_files:
 -   content: |
