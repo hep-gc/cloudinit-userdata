@@ -94,6 +94,8 @@ cvmfs:
   CVMFS_HTTP_PROXY: kraken01.westgrid.ca:3128
 
 ganglia:
+ globals:
+  override_hostname: "%f"
  cluster:
   name: '"CERN-PROD_CLOUD"'
  udp_recv_channel:
