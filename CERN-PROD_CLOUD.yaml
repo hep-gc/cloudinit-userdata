@@ -8,6 +8,9 @@ write_files:
             return 0
         fi
 
+        # Fix for CERN-specific issue (https://its.cern.ch/jira/browse/ADCSUPPORT-3687)
+        echo "poolcondpath = none" > ~/.asetup
+
         # Workaround for condor not setting $HOME for worker sessions.
         # voms-proxy-info requires this.
         export HOME=`eval echo ~$USER`
