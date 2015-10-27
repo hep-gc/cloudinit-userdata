@@ -99,6 +99,7 @@ cvmfs:
 ganglia:
  globals:
   override_hostname: "%f"
+  send_metadata_interval: 45
  cluster:
   name: '"CERN-PROD_CLOUD"'
  udp_recv_channel:

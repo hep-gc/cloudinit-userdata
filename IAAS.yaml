@@ -96,6 +96,7 @@ cvmfs:
 ganglia:
  globals:
   override_hostname: "%f"
+  send_metadata_interval: 45
  cluster:
   name: '"IAAS"'
  udp_recv_channel:
