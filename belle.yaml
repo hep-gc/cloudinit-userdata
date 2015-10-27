@@ -93,12 +93,6 @@ cvmfs:
   CVMFS_REPOSITORIES: belle.cern.ch,grid.cern.ch
   CVMFS_HTTP_PROXY: kraken01.westgrid.ca:3128
 
-yum_repos:
-    shoalrepo:
-        baseurl: http://shoal.heprc.uvic.ca/repo/prod/
-        enabled: true
-        gpgcheck: false
-
 shoal:
     shoal_server_url: http://shoal.heprc.uvic.ca/nearest
     default_squid_proxy: http://kraken01.westgrid.ca:3128;http://cernvm-webfs.atlas-canada.ca:3128;DIRECT
