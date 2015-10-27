@@ -122,7 +122,6 @@ packages:
     - shoal-client
 
 runcmd:
- - [ rpm, -U, --nodeps, --force, "http://sourceforge.net/projects/ganglia/files/ganglia%20monitoring%20core/3.4.0/RHEL6-RPMS/libganglia-3.4.0-1.x86_64.rpm/download", "http://sourceforge.net/projects/ganglia/files/ganglia%20monitoring%20core/3.4.0/RHEL6-RPMS/ganglia-gmond-3.4.0-1.x86_64.rpm/download"]
  - [ mv, /etc/localtime , /etc/localtime-old ]
  - [ ln, -sf, /usr/share/zoneinfo/UTC, /etc/localtime ]
  - [ fallocate, -l, 16G, /mnt/.rw/swap.1 ]
