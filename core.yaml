@@ -107,9 +107,6 @@ shoal:
     default_squid_proxy: http://kraken01.westgrid.ca:3128;http://cernvm-webfs.atlas-canada.ca:3128;DIRECT
     cron_shoal: '00 01,13 * * * root /usr/bin/shoal-client && /usr/bin/cvmfs_config reload'
 
-packages:
-    - shoal-client
-
 runcmd:
  - [ mv, /etc/localtime , /etc/localtime-old ]
  - [ ln, -sf, /usr/share/zoneinfo/UTC, /etc/localtime ]
