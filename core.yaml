@@ -1,0 +1,119 @@
+#cloud-config
+merge_type: 'list(append)+dict(recurse_array)+str()'
+
+write_files:
+-   content: |
+        # Keep grid setup out of environment for root and sysadmin.
+        if [[ ! "$USER" =~ ^slot[0-9]+$ ]] ; then
+            return 0
+        fi
+
+        # Workaround for condor not setting $HOME for worker sessions.
+        # voms-proxy-info requires this.
+        export HOME=`eval echo ~$USER`
+
+        # Tarball base directory
+        base="/cvmfs/grid.cern.ch/emi3wn-latest"
+        
+        # EMI_TARBALL_BASE flag to let jobs know that this is a tarball node
+        # also used to locate etc/emi-version file by SAM nagios probes
+        export EMI_TARBALL_BASE="${base}"
+        
+        # site vo/specific 
+        export VO_ATLAS_SW_DIR="/cvmfs/atlas.cern.ch/repo/sw"
+        export X509_CERT_DIR="/cvmfs/grid.cern.ch/etc/grid-security/certificates"
+        export X509_VOMS_DIR="/cvmfs/grid.cern.ch/etc/grid-security/vomsdir"
+        export VOMS_USERCONF="/cvmfs/grid.cern.ch/etc/grid-security/vomses"
+        
+        # experiment-specific
+        export MYPROXY_SERVER="myproxy.cern.ch"
+        export BDII_LIST="lcg-bdii.cern.ch:2170"
+        export LCG_GFAL_INFOSYS="${BDII_LIST}"
+        
+        # not site specific; usually no change needed
+        export GRID_ENV_LOCATION="${base}/usr/libexec"
+        export -n GLITE_ENV_SET
+        export GT_PROXY_MODE="old"
+        
+        # Add tarball locations to PATH, LD_LIBRARY_PATH, MANPATH, PERL5LIB, PYTHONPATH
+        export PATH="${base}/bin:${base}/sbin:${base}/usr/bin:${base}/usr/sbin:${PATH}"
+        
+        v="${LD_LIBRARY_PATH}"
+        export LD_LIBRARY_PATH="${base}/lib64:${base}/lib:${base}/usr/lib64:${base}/usr/lib:${base}/usr/lib64/dcap"
+        if [ -n "${v}" ]; then
+          export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${v}"
+        fi
+        
+        v="${MANPATH}"
+        export MANPATH="${base}/usr/share/man"
+        if [ -n "${v}" ]; then
+          export MANPATH="${MANPATH}:${v}"
+        fi
+        
+        v="${PERL5LIB}"
+        export PERL5LIB="${base}/usr/lib64/perl5/vendor_perl:${base}/usr/lib/perl5/vendor_perl"
+        if [ -n "${v}" ]; then
+          export PERL5LIB="${PERL5LIB}:${v}"
+        fi
+        
+        # It's important that there is no trailing / for the PYTHONPATH variable.
+        # Some sites might need to explicitly expand the tarball base if 
+        # their users alter the PYTHONPATH significantly, for example:
+        # $base/usr/lib64/python2.6:$base/usr/lib64/python2.6/site-package
+        # See the PYTHONPATH section of the documentation for more details.
+        v="$PYTHONPATH"
+        export PYTHONPATH="${base}/usr/lib64/python2.6/site-packages:${base}/usr/lib/python2.6/site-packages"
+        if [ -n "${v}" ]; then
+          export PYTHONPATH="${PYTHONPATH}:${v}"
+        fi
+        
+        export JAVA_HOME="${base}/usr/lib/jvm/jre-1.6.0-openjdk.x86_64"
+        
+        export LCG_LOCATION="${base}/usr"
+        export GLITE_LOCATION="${base}/usr"
+        # If this is needed try $base/opt/glite/var instead
+        #export GLITE_LOCATION_VAR="/var"
+        export SRM_PATH="${base}/usr/share/srm"
+        export GFAL_PLUGIN_DIR="${base}/usr/lib64/gfal2-plugins/"
+        export GFAL_CONFIG_DIR="${base}/etc/gfal2.d/"
+        
+        unset v base
+    owner: root:root
+    path: /etc/profile.d/grid-setup.sh
+    permissions: '0644'
+-   content: |
+        # Run shoal client at boot to get updated list of proxy caches
+        @reboot root /usr/bin/shoal-client && /usr/bin/cvmfs_config reload
+    owner: root:root
+    path: /etc/cron.d/shoal-client-boot
+    permissions: '0644'
+
+cvmfs:
+ local:
+  CVMFS_REPOSITORIES: atlas.cern.ch,atlas-condb.cern.ch,atlas-nightlies.cern.ch,grid.cern.ch,sft.cern.ch
+  CVMFS_HTTP_PROXY: kraken01.westgrid.ca:3128
+
+ganglia:
+ globals:
+  override_hostname: "%f"
+  send_metadata_interval: 45
+ udp_send_channel:
+  host: atlas-ganglia-mon.cern.ch
+  ttl: 2
+
+shoal:
+    shoal_server_url: http://shoal.heprc.uvic.ca/nearest
+    default_squid_proxy: http://kraken01.westgrid.ca:3128;http://cernvm-webfs.atlas-canada.ca:3128;DIRECT
+    cron_shoal: '00 01,13 * * * root /usr/bin/shoal-client && /usr/bin/cvmfs_config reload'
+
+packages:
+    - shoal-client
+
+runcmd:
+ - [ mv, /etc/localtime , /etc/localtime-old ]
+ - [ ln, -sf, /usr/share/zoneinfo/UTC, /etc/localtime ]
+ - [ fallocate, -l, 16G, /mnt/.rw/swap.1 ]
+ - [ mkswap, /mnt/.rw/swap.1 ]
+ - [ swapon, /mnt/.rw/swap.1 ]
+ - [ rm, -f, /etc/condor/config.d/50cernvm ]
+
