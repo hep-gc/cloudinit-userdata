@@ -95,7 +95,7 @@ cvmfs:
 
 ganglia:
  globals:
-  override_hostname: "%f"
+  override_hostname_bash: "hostname -f"
   send_metadata_interval: 45
  udp_send_channel:
   host: atlas-ganglia-mon.cern.ch
