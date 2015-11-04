@@ -1,0 +1,16 @@
+#cloud-config
+merge_type: 'list(append)+dict(recurse_array)+str()'
+
+ganglia:
+ cluster:
+  name: '"CA-JADE"'
+ udp_recv_channel:
+  port: 8660
+ tcp_accept_channel:
+  port: 8660
+ udp_send_channel:
+  port: 8660
+
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC5nCWnNvXUGFgW+1cKinQhulovYs6qjjHTv3A1dRjWMuaXfqlz1udRJfTY/aU2qY9dU0slWFW8YKMx7Qdd3lE/YJ60hu8Q85ewLhwlBN8lNBExsCmiYrP7wOfyUZZgVU0cgEVt1sh0Uh9HhB0VXUUuRNcKt3hM0IM7DbHihbFIOv0/FLmNcWaVVJwtqtyMJoFxBl4Wfpk9xnk1sjrDVaBlxnFexIvifJhW0THY68yqpOapRv0+qgp0lecQWqIKgaGDssCGmi8Yq2Z3o4dZBzOZdJiAN0WHR+UPOfcLw86N0MjwBPOhOnWDnluF9Iys+gMxXj9jkXVhQDEMI8JHIShZ7gRuTkjeJ+1CHVXvBRck4vQQz83qHRQR8DFEofqN1h2a8zLQYQ9n310lxOo1LqS0k6qubrbzRIDweEv/Id/+WihhJvgEV9cho7xvm+Xf/s5k0X0xHKlgqCDh7lN6Aabr9s504xDu/HX+D2+w60HiGtZZC76pW5slCZWHlGNKC9C0l/Toe9UOiupD6JJKSHO6SQkZncSUYYuGWic/zYAImsaThvib9zkPU8j8bckxvvTccz6rP2dS7ASXjz0JFxoM9nKlvnFjRCQLxURrW90+w5Qz+rSeIEuzVOBig+qd+mxgG5awkq8+RrCX067oDl8GFy1RMDtoQGCu23SAkE80EQ== workstation
+  - ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA4Y8r8SG6pVqVnQ3ITcOiHi4No2pFg7IeFPVmU08JpIvzvZ5XIEVfrTz49uGNeUKJYxjUvKrG2Dp+tCi7wODBjXRFY+M7VTAS24ldHbLu+MP9KPUSb4RFainzQaHVpHUloXr+P2aTOLXuJXLVQbvXF/X4kEQE0fe1xJHQa4jJpPRBYwHJSrD9QQZIH/773Kud7IjjUUV7baOzbxwssTGqX8r/TctMJIqvYYDmR+r0v18a8qlbUPiIdfxXm13sAzyfX00CVTG3yV4tv3j2D+b914+JIx4bvY8/Detux5W2g9YzRJa1ujjbtkkYFOdxXeFeAPPQbdXR83eQoOvqyEnNmQ== super@gcloudcon.westgrid.ca
