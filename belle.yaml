@@ -92,6 +92,7 @@ cvmfs:
  local:
   CVMFS_REPOSITORIES: belle.cern.ch,grid.cern.ch
   CVMFS_HTTP_PROXY: kraken01.westgrid.ca:3128
+  CVMFS_CACHE_BASE: /mnt/.rw/cvmfs-cache
 
 shoal:
     shoal_server_url: http://shoal.heprc.uvic.ca/nearest
