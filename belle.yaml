@@ -88,6 +88,21 @@ write_files:
     path: /etc/cron.d/shoal-client-boot
     permissions: '0644'
 
+-   content: |
+        ALLOW_DAEMON = condor_pool@*, submit-side@matchsession
+        COLLECTOR_NAME = CernVM cluster at \$(CONDOR_HOST)
+        NEGOTIATOR_INTERVAL = 20
+        START = TRUE
+        SUSPEND = FALSE
+        PREEMPT = FALSE
+        KILL = FALSE
+        TRUST_UID_DOMAIN = TRUE
+        UPDATE_COLLECTOR_WITH_TCP = True
+        COLLECTOR_SOCKET_CACHE_SIZE = 1000
+    owner: root:root
+    path: /etc/condor/config.d/40cernvm
+    permissions: '0644'
+
 cvmfs:
  local:
   CVMFS_REPOSITORIES: belle.cern.ch,grid.cern.ch
@@ -100,11 +115,12 @@ shoal:
     cron_shoal: '00 01,13 * * * root /usr/bin/shoal-client && /usr/bin/cvmfs_config reload'
 
 runcmd:
- - [ echo, 202.13.207.211, dirac.cc.kek.jp, >>, /etc/hosts ]
- - [ echo, 202.13.207.225, dirac1.cc.kek.jp, >>, /etc/hosts ]
- - [ echo, 202.13.207.216, dirac2.cc.kek.jp, >>, /etc/hosts ]
- - [ echo, 202.13.207.217, dirac3.cc.kek.jp, >>, /etc/hosts ]
- - [ echo, 202.13.206.45, kek2-lfc.cc.kek.jp, >>, /etc/hosts ]
+ - [ shoal-client ] 
+ - echo 202.13.207.211 dirac.cc.kek.jp >> /etc/hosts 
+ - echo 202.13.207.225 dirac1.cc.kek.jp >> /etc/hosts 
+ - echo 202.13.207.216 dirac2.cc.kek.jp >> /etc/hosts 
+ - echo 202.13.207.217 dirac3.cc.kek.jp >> /etc/hosts 
+ - echo 202.13.206.45 kek2-lfc.cc.kek.jp >> /etc/hosts 
  - [ mv, /etc/localtime , /etc/localtime-old ]
  - [ ln, -sf, /usr/share/zoneinfo/UTC, /etc/localtime ]
  - [ fallocate, -l, 16G, /mnt/.rw/swap.1 ]
