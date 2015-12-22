@@ -102,6 +102,46 @@ write_files:
     owner: root:root
     path: /etc/condor/config.d/40cernvm
     permissions: '0644'
+-   content: |
+        #!/bin/bash
+        PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin
+
+        rm -rf munin-reporter-light*
+        wget http://vmrepo.heprc.uvic.ca/munin-reporter-light.tar.gz
+        tar -xzvf munin-reporter-light.tar.gz
+
+        yum install -y epel-release
+        yum install -y munin-node
+        rm -fv /etc/munin/plugins/*
+
+        cp munin-reporter-light/if_uvic_ /usr/share/munin/plugins/
+
+        (cd /etc/munin/plugins; ln -s /usr/share/munin/plugins/cpu)
+        (cd /etc/munin/plugins; ln -s /usr/share/munin/plugins/df)
+        (cd /etc/munin/plugins; ln -s /usr/share/munin/plugins/memory)
+
+        stdout=`ifconfig | awk '/^em|^eth/ {print gensub(":",""i,"g",\$1)}'`
+        IFS=$'\n'
+        interfaces=($stdout)
+        for (( i=0; i<=${#interfaces[@]}; i=$i+1 )); do
+            if [ "X${interfaces[$i]}" != 'X' ]; then
+                (cd /etc/munin/plugins; ln -s /usr/share/munin/plugins/if_uvic_ if_${interfaces[$i]})
+            fi  
+        done
+
+        chkconfig redis on
+        service redis start
+
+        cp munin-reporter-light/munin-node-redis /usr/local/sbin/
+        cp munin-reporter-light/munin-node-redis.conf /usr/local/etc/
+        cp munin-reporter-light/munin-node-redis.cron /etc/cron.d/munin-node-redis
+
+        cp munin-reporter-light/munin-node-reporter /usr/local/sbin/
+        cp munin-reporter-light/munin-node-reporter.conf /usr/local/etc/
+        cp munin-reporter-light/munin-node-reporter.cron /etc/cron.d/munin-node-reporter
+    owner: root:root
+    path: /usr/local/sbin/munin-reporter-light-install
+    permissions: '0700'
 
 cvmfs:
  local:
@@ -110,7 +150,7 @@ cvmfs:
   CVMFS_CACHE_BASE: /mnt/.rw/cvmfs-cache
 
 shoal:
-    shoal_server_url: http://shoal.heprc.uvic.ca/nearest
+    shoal_server_url: http://206.12.59.209/nearest
     default_squid_proxy: http://kraken01.westgrid.ca:3128;http://cernvm-webfs.atlas-canada.ca:3128;DIRECT
     cron_shoal: '00 01,13 * * * root /usr/bin/shoal-client && /usr/bin/cvmfs_config reload'
 
@@ -127,6 +167,7 @@ runcmd:
  - [ mkswap, /mnt/.rw/swap.1 ]
  - [ swapon, /mnt/.rw/swap.1 ]
  - [ rm, -f, /etc/condor/config.d/50cernvm ]
+ - [ /usr/local/sbin/munin-reporter-light-install ]
 
 ssh_authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAsuHZK7hb5Ve0Q7FHhGd7cUjW+33ZUSkjkSgQ3TvQ5ZMQpRoLenkm/OBxP93gIFNwsdQqbGiMpusfiaJ5Vx/SUdeRX/9P0ULNxkYK4fxUIzOEXSeiUojKvxUMGQjM4fUR8CASKNYnxL65MSYIFrvuOT3Au19fRlv3napXzbvMbjYtOgWdjaZQWfvFUBVtZTASRafBMw44uf9Y/Av2gnD2OlxQ7ijq9zhda2wFLDe4LYDHIzb5NsU7YcYceSMf1dSjiQPMT+bMgvfQmqxD+M5jL+w51sFwuxQCK4UUQfsvv971ewyCHQ+kB8CzrLGfSCkHXeTvOOC0GY8FWC54B6D7RQ== mhp@heplw12.phys.UVic.CA
