@@ -91,7 +91,7 @@ write_files:
 cvmfs:
  local:
   CVMFS_REPOSITORIES: atlas.cern.ch,atlas-condb.cern.ch,atlas-nightlies.cern.ch,grid.cern.ch,sft.cern.ch
-  CVMFS_HTTP_PROXY: kraken01.westgrid.ca:3128
+  CVMFS_HTTP_PROXY: http://kraken01.westgrid.ca:3128;http://cernvm-webfs.atlas-canada.ca:3128;DIRECT 
   CVMFS_CACHE_BASE: /mnt/.rw/cvmfs-cache
   CVMFS_LOW_SPEED_LIMIT: 5000
 
