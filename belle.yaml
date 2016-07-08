@@ -153,7 +153,7 @@ cvmfs:
   CVMFS_CACHE_BASE: /mnt/.rw/cvmfs-cache
 
 shoal:
-    shoal_server_url: http://206.12.59.209/nearest
+    shoal_server_url: http://shoal.heprc.uvic.ca/nearest
     default_squid_proxy: http://kraken01.westgrid.ca:3128;http://cernvm-webfs.atlas-canada.ca:3128;DIRECT
     cron_shoal: '00 01,13 * * * root /usr/bin/shoal-client && /usr/bin/cvmfs_config reload'
 
