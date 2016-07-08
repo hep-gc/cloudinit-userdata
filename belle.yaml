@@ -182,7 +182,7 @@ runcmd:
  - [ mkswap, /mnt/.rw/swap.1 ]
  - [ swapon, /mnt/.rw/swap.1 ]
  - [ rm, -f, /etc/condor/config.d/50cernvm ]
- - [ /usr/local/sbin/munin-reporter-light-install ]
+ - [ echo, /usr/local/sbin/munin-reporter-light-install ]
 
 ssh_authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAsuHZK7hb5Ve0Q7FHhGd7cUjW+33ZUSkjkSgQ3TvQ5ZMQpRoLenkm/OBxP93gIFNwsdQqbGiMpusfiaJ5Vx/SUdeRX/9P0ULNxkYK4fxUIzOEXSeiUojKvxUMGQjM4fUR8CASKNYnxL65MSYIFrvuOT3Au19fRlv3napXzbvMbjYtOgWdjaZQWfvFUBVtZTASRafBMw44uf9Y/Av2gnD2OlxQ7ijq9zhda2wFLDe4LYDHIzb5NsU7YcYceSMf1dSjiQPMT+bMgvfQmqxD+M5jL+w51sFwuxQCK4UUQfsvv971ewyCHQ+kB8CzrLGfSCkHXeTvOOC0GY8FWC54B6D7RQ== mhp@heplw12.phys.UVic.CA
