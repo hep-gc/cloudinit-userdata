@@ -139,7 +139,9 @@ write_files:
 
         cp munin-reporter-light/munin-node-reporter /usr/local/sbin/
         cp munin-reporter-light/munin-node-reporter.conf /usr/local/etc/
-        cp munin-reporter-light/munin-node-reporter.cron /etc/cron.d/munin-node-reporter
+
+        cp munin-reporter-light/munin-node-reporter-light /usr/local/sbin/
+        cp munin-reporter-light/munin-node-reporter-light.cron /etc/cron.d/munin-node-reporter-light
     owner: root:root
     path: /usr/local/sbin/munin-reporter-light-install
     permissions: '0700'
