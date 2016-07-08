@@ -98,7 +98,9 @@ write_files:
         HIGHPORT = 50000
         LOWPORT = 40000
 
-        UPDATE_INTERVAL = 180
+        startd.POLLING_INTERVAL = 60
+        startd.UPDATE_INTERVAL = 180
+        startd.UPDATE_OFFSET = $RANDOM_INTEGER(0,180)
     owner: root:root
     permissions: '0644'
     path: /etc/condor/condor_config.local
