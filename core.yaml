@@ -109,7 +109,6 @@ shoal:
     cron_shoal: '00 01,13 * * * root /usr/bin/shoal-client'
 
 runcmd:
- - [ sysctl, net.ipv4.tcp_keepalive_time=200, net.ipv4.tcp_keepalive_intvl=200, net.ipv4.tcp_keepalive_probes=5 ]
  - [ mv, /etc/localtime , /etc/localtime-old ]
  - [ ln, -sf, /usr/share/zoneinfo/UTC, /etc/localtime ]
  - [ fallocate, -l, 16G, /mnt/.rw/swap.1 ]
