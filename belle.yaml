@@ -161,7 +161,7 @@ runcmd:
  - echo 202.13.207.225 dirac1.cc.kek.jp >> /etc/hosts 
  - echo 202.13.207.216 dirac2.cc.kek.jp >> /etc/hosts 
  - echo 202.13.207.217 dirac3.cc.kek.jp >> /etc/hosts 
- - echo 202.13.206.45 kek2-lfc.cc.kek.jp >> /etc/hosts 
+ - echo 202.13.206.45 kek2-lfc.cc.kek.jp >> /etc/hosts
  - echo nameserver 8.8.8.8 >> /etc/resolv.conf
  - [ mv, /etc/localtime , /etc/localtime-old ]
  - [ ln, -sf, /usr/share/zoneinfo/UTC, /etc/localtime ]
