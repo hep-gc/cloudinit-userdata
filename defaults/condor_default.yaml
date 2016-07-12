@@ -44,6 +44,7 @@ write_files:
 
         ##  Enable CCB for nodes behind NAT
         CCB_ADDRESS = $(CONDOR_HOST)
+        CCB_HEARTBEAT_INTERVAL = 180
 
         ## By default, user jobs run as nobody.
         TRUST_UID_DOMAIN = False
