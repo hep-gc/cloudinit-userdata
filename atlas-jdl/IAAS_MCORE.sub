@@ -1,0 +1,46 @@
+#
+# condor submission for ATLAS pilots to condor queue monitored by a
+# cloud scheduler
+#
+universe = vanilla
+
+# === job parameters ===
+dir           = $ENV(HOME)/logs/prod
+output        = $(Dir)/$(Cluster).$(Process).out
+error         = $(Dir)/$(Cluster).$(Process).err
+log           = $(Dir)/$(Cluster).$(Process).log
+executable    = runpilot3-wrapper.sh
+arguments     = -s IAAS_MCORE -h IAAS_MCORE -p 25443 -w https://pandaserver.cern.ch
+environment   = "ATLAS_SITE_NAME=IAAS APF_PYTHON26=1 RUCIO_ACCOUNT=pilot"
+request_cpus   = 8
+request_memory = 15000
+request_disk   = 120000000
+requirements  = VMType =?= "atlas-mcore-worker" && Target.Arch == "x86_64"
+x509userproxy = $ENV(HOME)/atprd.proxy
+
+
+# === job behaviour ===
+stream_output           = False
+stream_error            = False
+notification            = Error
+should_transfer_files   = YES
+when_to_transfer_output = ON_EXIT_OR_EVICT
+periodic_remove         =  ( JobStatus == 5 && ( CurrentTime - EnteredCurrentStatus ) > 3600 ) \
+		        || ( JobStatus == 1 && globusstatus =!= 1 && ( CurrentTime - EnteredCurrentStatus ) > 86400 )
+
+
+# === VM configuration for cloud scheduler ===
++VMName         = "PandaCern"
++VMAMI          = "default:ucernvm-prod.2.4-6.hdd,Quicksilver:ami-00000022"
++VMInstanceType = "cc-west:c8-30gb-186,cc-east:c8-30gb-430,Alto:hep2.8,Quicksilver:m1.medium,dair-ab:m1.hepnet2,dair-qc:m1.hepnet2,Mouse:cvm.xlarge,beaver:m8"
++VMKeepAlive    = "30"
++VMJobPerCore   = "False"
++TargetClouds   = "IAAS_MCORE"
++VMAMIConfig    = "/srv/userdata/core.yaml:cloud-config,/srv/userdata/IAAS.yaml:cloud-config,/srv/userdata/cernvm-data.txt:ucernvm-config"
++VMUseCloudInit = "True"
++VMInjectCA     = "False"
+# Workaround for booting too many VMs - this gives CS an indication that the VMs have 8 cores.
++VMCPUCores     = 8
+
+Priority        =  0
+Queue 8
