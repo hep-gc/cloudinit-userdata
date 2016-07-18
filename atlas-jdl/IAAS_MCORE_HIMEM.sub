@@ -36,7 +36,7 @@ periodic_remove         =  ( JobStatus == 5 && ( CurrentTime - EnteredCurrentSta
 +VMKeepAlive    = "30"
 +VMJobPerCore   = "False"
 +TargetClouds   = "cc-west"
-+VMAMIConfig    = "/srv/userdata/core.yaml:cloud-config,/srv/userdata/IAAS.yaml:cloud-config,/srv/userdata/cernvm-data.txt:ucernvm-config"
++VMAMIConfig    = "/srv/userdata/core.yaml:cloud-config,/srv/userdata/IAAS.yaml:cloud-config,/root/HEPbm.yaml:cloud-config,/srv/userdata/cernvm-data.txt:ucernvm-config"
 +VMUseCloudInit = "True"
 +VMInjectCA     = "False"
 # Workaround for booting too many VMs - this gives CS an indication that the VMs have 8 cores.
