@@ -32,7 +32,7 @@ periodic_remove         =  ( JobStatus == 5 && ( CurrentTime - EnteredCurrentSta
 # === VM configuration for cloud scheduler ===
 +VMName         = "PandaCern"
 +VMAMI          = "default:ucernvm-prod.2.4-6.hdd,Quicksilver:ami-00000022"
-+VMInstanceType = "cc-west:c8-30gb-186,cc-east:c8-30gb-430,Alto:hep2.8,Quicksilver:m1.medium,dair-ab:m1.hepnet2,dair-qc:m1.hepnet2,Mouse:cvm.xlarge,beaver:m8"
++VMInstanceType = "cc-west:c8-30gb-186,cc-east:c8-30gb-430,Alto:hep2.8,Quicksilver:m1.medium,dair-ab:m1.hepnet2,dair-qc:m1.hepnet2,Mouse:cvm.xlarge,beaver:m8,chameleon:m1.large"
 +VMKeepAlive    = "30"
 +VMJobPerCore   = "True"
 +TargetClouds   = "IAAS"
