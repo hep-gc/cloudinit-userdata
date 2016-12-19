@@ -1,5 +1,5 @@
 [ucernvm-begin]
 useglideinWMS=false
 CVMFS_PAC_URLS=http://shoal.heprc.uvic.ca/wpad.dat
-CVMFS_HTTP_PROXY=auto;http://kraken01.westgrid.ca:3128;DIRECT
+CVMFS_HTTP_PROXY='auto;http://kraken01.westgrid.ca:3128;DIRECT'
 [ucernvm-end]
